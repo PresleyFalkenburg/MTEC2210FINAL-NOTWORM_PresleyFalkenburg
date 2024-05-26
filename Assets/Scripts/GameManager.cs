@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
             players[i] = Instantiate(playerPrefabs[i], new Vector3(randomX, -20f, 0f), Quaternion.identity);
             players[i].GetComponent<PlayerMovement>().enabled = false;
             players[i].GetComponentInChildren<PlayerActionManager>().enabled = false;
+            players[i].GetComponentInChildren<UIButtonScript>().enabled = false;
+            players[i].GetComponentInChildren<Canvas>().enabled = false;
             SetupPlayerCamera(players[i]); // Call new function to setup camera
         }
     }

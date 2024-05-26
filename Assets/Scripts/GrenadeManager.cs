@@ -65,7 +65,7 @@ public class GrenadeManager : MonoBehaviour
 
         // Enable explosion sprite on explosion
         explosionSprite.enabled = true;
-      
+        new WaitForSeconds(0.5f);
 
         // Destroy the grenade after explosion (optional)
         Destroy(gameObject);

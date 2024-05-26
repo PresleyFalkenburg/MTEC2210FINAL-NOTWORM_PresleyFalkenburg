@@ -4006,14 +4006,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a40d579e5c3f754cbae36b70a33d9f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCount: 2
+  playerCount: 3
   playerPrefabs:
   - {fileID: 5379747565561191915, guid: f40ba638ad5a76644a0fd1f648c28100, type: 3}
-  - {fileID: 5379747565561191915, guid: f40ba638ad5a76644a0fd1f648c28100, type: 3}
-  - {fileID: 954195130386630113, guid: f7008282fa57ddf41800670c9d733b32, type: 3}
-  - {fileID: 954195130386630113, guid: 1f640cea7cde45340a973378399b9c36, type: 3}
-  - {fileID: 954195130386630113, guid: 95acaa1c177ff0748a8a9650edfe911c, type: 3}
-  - {fileID: 954195130386630113, guid: 8f02da8492ce9364a91b4326a77974c1, type: 3}
+  - {fileID: 5379747565561191915, guid: 66b7aaa3a8acea8419b8ef70bfd28d9e, type: 3}
+  - {fileID: 5379747565561191915, guid: 4bd5e80068288094294c2e5d4feaffb2, type: 3}
+  - {fileID: 5379747565561191915, guid: 88356c318964f7d4680fa4e53a1221ca, type: 3}
+  - {fileID: 5379747565561191915, guid: d473cada5a6f72a409667df8640a0d11, type: 3}
+  - {fileID: 5379747565561191915, guid: 64411ad351fd1ef4fa346ebdc9de2768, type: 3}
   spawnAreaXMin: -10
   spawnAreaXMax: 5
   TurnTimer: 25

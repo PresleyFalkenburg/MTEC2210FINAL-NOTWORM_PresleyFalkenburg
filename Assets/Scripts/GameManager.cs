@@ -8,12 +8,12 @@ public class GameManager : MonoBehaviour
     public GameObject[] playerPrefabs; // Array of player prefabs to spawn
     public float spawnAreaXMin = -5f; // Minimum X position for spawn area
     public float spawnAreaXMax = 5f; // Maximum X position for spawn area
+    public float TurnTimer = 25f;
+    public int currentPlayerIndex = 0;
+    public GameObject[] players;
+    public bool isMainCameraActive = true; // Flag to track current view (true = main camera, false = player camera)
 
-    private int currentPlayerIndex = 0;
-    private GameObject[] players;
-    private bool isMainCameraActive = true; // Flag to track current view (true = main camera, false = player camera)
-
-    private void Start()
+    public void Start()
     {
         SpawnPlayers();
         StartCoroutine(ManageTurns());
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
             // Spawn player at random X and fixed Y position
             players[i] = Instantiate(playerPrefabs[i], new Vector3(randomX, -20f, 0f), Quaternion.identity);
             players[i].GetComponent<PlayerMovement>().enabled = false;
-            players[i].GetComponentInChildren<GrenadeShoot>().enabled = false;
+            players[i].GetComponentInChildren<PlayerActionManager>().enabled = false;
             SetupPlayerCamera(players[i]); // Call new function to setup camera
         }
     }
@@ -51,14 +51,19 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             players[currentPlayerIndex].GetComponent<PlayerMovement>().enabled = true;
-            players[currentPlayerIndex].GetComponentInChildren<GrenadeShoot>().enabled = true;
+            players[currentPlayerIndex].GetComponentInChildren<PlayerActionManager>().enabled = true;
+            players[currentPlayerIndex].GetComponentInChildren<UIButtonScript>().enabled = true;
+            players[currentPlayerIndex].GetComponentInChildren<Canvas>().enabled = true;
             EnablePlayerCamera(players[currentPlayerIndex]); // Enable current player camera
 
-            yield return new WaitForSeconds(25f);
+            yield return new WaitForSeconds(TurnTimer);
+            //call function that reset the UI progress bar
 
             Debug.Log("Turn Switch");
             players[currentPlayerIndex].GetComponent<PlayerMovement>().enabled = false;
-            players[currentPlayerIndex].GetComponentInChildren<GrenadeShoot>().enabled = false;
+            players[currentPlayerIndex].GetComponentInChildren<PlayerActionManager>().enabled = false;
+            players[currentPlayerIndex].GetComponentInChildren<UIButtonScript>().enabled = false;
+            players[currentPlayerIndex].GetComponentInChildren<Canvas>().enabled = false;
             DisablePlayerCameras(); // Disable all player cameras
 
             currentPlayerIndex++;
@@ -70,7 +75,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void EnablePlayerCamera(GameObject player)
+    public void EnablePlayerCamera(GameObject player)
     {
         Camera playerCamera = player.GetComponentInChildren<Camera>();
         if (playerCamera != null)
@@ -81,7 +86,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void DisablePlayerCameras()
+    public void DisablePlayerCameras()
     {
         foreach (GameObject player in players)
         {
@@ -109,4 +114,5 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
 }

@@ -10,7 +10,10 @@ public class GrenadeManager : MonoBehaviour
     public float shootForce;
     public float explosionForce;
     public float timer = 5.0f; // Time before explosion (in seconds)
-    private float countdown; // Internal counter for timer
+    private float countdown;
+
+    // References to explosion sprite
+    public SpriteRenderer explosionSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -24,17 +27,17 @@ public class GrenadeManager : MonoBehaviour
         float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rot + 90);
 
-        // Start the countdown timer
+        // Ensure explosion sprite is initially disabled
+        explosionSprite.enabled = false;
+
         countdown = timer;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Decrement the countdown timer
         countdown -= Time.deltaTime;
 
-        // Check if timer is finished (countdown <= 0)
         if (countdown <= 0)
         {
             Explode();
@@ -50,17 +53,19 @@ public class GrenadeManager : MonoBehaviour
         // Loop through each collider
         foreach (Collider2D collider in colliders)
         {
-            // Check if collider has a Rigidbody2D
             Rigidbody2D otherRb = collider.GetComponent<Rigidbody2D>();
             if (otherRb != null)
             {
-                // Apply force based on distance to explosion center
                 Vector2 direction = otherRb.transform.position - transform.position;
                 float distance = direction.magnitude;
-                float forceMultiplier = Mathf.InverseLerp(GetBlastRadius(), 0.0f, distance); // Higher force closer to center
+                float forceMultiplier = Mathf.InverseLerp(GetBlastRadius(), 0.0f, distance);
                 otherRb.AddForce(direction.normalized * explosionForce * forceMultiplier, ForceMode2D.Impulse);
             }
         }
+
+        // Enable explosion sprite on explosion
+        explosionSprite.enabled = true;
+      
 
         // Destroy the grenade after explosion (optional)
         Destroy(gameObject);
